@@ -49,14 +49,14 @@ public class Player : MonoBehaviour
             rb.gravityScale = 0;
             rb.velocity = new Vector2(rb.velocity.x, 0);
 
-            speed /= 1.5f;
+            h /= 2;
 
             bool up = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space);
             bool down = Input.GetKey(KeyCode.S);
 
-            if (up && !PrevUp()) 
+            if (up) 
                     transform.Translate(Vector2.up * 3 * Time.fixedDeltaTime);
-            else if (down && !PrevDown()) 
+            else if (down) 
                 transform.Translate(-Vector2.up * 3 * Time.fixedDeltaTime);
         } else {
             rb.gravityScale = gravity;
@@ -81,18 +81,6 @@ public class Player : MonoBehaviour
 
     public bool InStair() {
         RaycastHit2D cast = Physics2D.BoxCast(transform.position, new Vector2(0.5f, 0.5f), 0, Vector2.down, 0.7f, LayerMask.GetMask("stair"));
-
-        return cast;
-    }
-
-    public bool PrevUp() {
-        RaycastHit2D cast = Physics2D.BoxCast(transform.position, new Vector2(0.5f, 0.5f), 0, Vector2.down, 0.7f, LayerMask.GetMask("prevUp"));
-
-        return cast;
-    }
-
-    public bool PrevDown() {
-        RaycastHit2D cast = Physics2D.BoxCast(transform.position, new Vector2(0.5f, 0.5f), 0, Vector2.down, 0.7f, LayerMask.GetMask("prevDown"));
 
         return cast;
     }

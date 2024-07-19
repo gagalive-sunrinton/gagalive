@@ -23,6 +23,7 @@ public class sight2D : MonoBehaviour
     private void Awake()
     {
         m_horizontalViewHalfAngle = m_horizontalViewAngle * 0.5f;
+        
     }
 
     private void OnDrawGizmos()
