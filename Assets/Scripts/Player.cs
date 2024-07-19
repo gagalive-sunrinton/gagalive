@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
@@ -133,6 +134,11 @@ public class Player : MonoBehaviour
             MapManager.Instance.lastClass.Go();
             health--;
             MapManager.Instance.timer = -5f;
+            MapManager.Instance.classMob.gameObject.SetActive(false);
+
+            if (health <= 0) {
+                SceneManager.LoadScene("Die_ending");
+            }
         }
 
     }
