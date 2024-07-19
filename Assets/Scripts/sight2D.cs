@@ -19,7 +19,7 @@ public class sight2D : MonoBehaviour
     private List<Collider2D> hitedTargetContainer = new List<Collider2D>(); // 인식한 물체들을 보관할 컨테이너
     public bool isSeePlayer = false;
     private float m_horizontalViewHalfAngle = 0f; // 시야각의 절반 값
-
+    public Vector3 targetpos1;
     private void Awake()
     {
         m_horizontalViewHalfAngle = m_horizontalViewAngle * 0.5f;
@@ -53,7 +53,7 @@ public class sight2D : MonoBehaviour
 
         Vector2      originPos    = transform.position;
         Collider2D[] hitedTargets = Physics2D.OverlapCircleAll(originPos, m_viewRadius, m_viewTargetMask);
-        
+        isSeePlayer =false;
         foreach (Collider2D hitedTarget in hitedTargets)
         {
             Vector2 targetPos = hitedTarget.transform.position;
@@ -82,6 +82,8 @@ public class sight2D : MonoBehaviour
                     {
                         Debug.DrawLine(originPos, targetPos, Color.red);
                         isSeePlayer = true;
+
+                        targetpos1 = targetPos;
                     }
                 }
             }
