@@ -6,14 +6,21 @@ public class Player : MonoBehaviour
 {
     Rigidbody2D rb;
     public float gravity, moveSpeed;
+    public sight2D sight2D1 = new sight2D();
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (sight2D1.isSeePlayer == true)
+        {
+            Debug.Log("으아ㅏ아아!");
+        }
+        
         float h = Input.GetAxis("Horizontal");
 
         if (InStair()) {
