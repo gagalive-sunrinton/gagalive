@@ -12,6 +12,7 @@ public class MapManager : MonoBehaviour
     public static MapManager Instance {get; private set;}
     public GameObject classSet, corridorSet, spawnpos,monster;
     public MapState state;
+    public InfoAction classGate1, classGate2;
     public float timer; 
     void Start()
     {
