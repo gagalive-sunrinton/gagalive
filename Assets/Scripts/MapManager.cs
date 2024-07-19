@@ -9,10 +9,12 @@ public enum MapState {
 
 public class MapManager : MonoBehaviour
 {
+    public static MapManager Instance {get; private set;}
     public GameObject classSet, corridorSet;
     public MapState state;
     void Start()
     {
+        Instance = this;
     }
 
     void Update()

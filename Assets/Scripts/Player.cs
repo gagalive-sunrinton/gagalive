@@ -1,31 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     public static Player main {get; private set;}
     Rigidbody2D rb;
+    public Light2D sp_light;
     SpriteRenderer render;
+    Animator animator;
     public float gravity, moveSpeed;
     public float stemina = 100;
     [SerializeField] Slider stemina_display;
     [SerializeField] Image Fill, background;
     float stem_disTime;
-    float stairMax, stairMin;
+    public float stairMax, stairMin;
     
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         render = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
 
         main = this;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        sp_light.lightCookieSprite = render.sprite;
+
         float speed = 10 * moveSpeed;
         stemina_display.value = stemina / 100f;
         
@@ -34,7 +40,7 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift)) {
             speed *= 1.5f;
 
-            stemina -= 160 * Time.deltaTime;
+            stemina -= 140 * Time.fixedDeltaTime;
 
             stem_disTime = 3;
         }
@@ -48,36 +54,45 @@ public class Player : MonoBehaviour
             bool up = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space);
             bool down = Input.GetKey(KeyCode.S);
 
-            if (up && transform.position.y < stairMax) 
-                transform.Translate(Vector2.up * 6 * Time.deltaTime);
-            else if (down && transform.position.y > stairMin + 1f) 
-                transform.Translate(-Vector2.up * 6 * Time.deltaTime);
+            if (up && !PrevUp()) 
+                    transform.Translate(Vector2.up * 3 * Time.fixedDeltaTime);
+            else if (down && !PrevDown()) 
+                transform.Translate(-Vector2.up * 3 * Time.fixedDeltaTime);
         } else {
             rb.gravityScale = gravity;
         }
 
         if (h == 0) {
             rb.velocity = new Vector2(rb.velocity.x / 3, rb.velocity.y);
+            animator.SetBool("isMoving", false);
         } else {
+            animator.SetBool("isMoving", true);
             if (h < 0) {
-                transform.localScale = new Vector3(-1, 1);
-                stemina_display.transform.localScale = new Vector3(1, 1);
+                transform.localScale = new Vector3(-1.5f, 1.5f);
+                stemina_display.transform.localScale = new Vector3(0.7f, 0.7f);
             } else {
-                transform.localScale = new Vector3(1, 1);
-                stemina_display.transform.localScale = new Vector3(-1, 1);
+                transform.localScale = new Vector3(1.5f, 1.5f);
+                stemina_display.transform.localScale = new Vector3(-0.7f, 0.7f);
             }
 
-            rb.velocity = new Vector2(h * speed * Time.deltaTime, rb.velocity.y);
+            rb.velocity = new Vector2(h * speed * Time.fixedDeltaTime, rb.velocity.y);
         }
     }
 
     public bool InStair() {
         RaycastHit2D cast = Physics2D.BoxCast(transform.position, new Vector2(0.5f, 0.5f), 0, Vector2.down, 0.7f, LayerMask.GetMask("stair"));
 
-        if (cast) {
-            stairMin = cast.transform.position.y - cast.transform.localScale.y;
-            stairMax = cast.transform.position.y + cast.transform.localScale.y;
-        }
+        return cast;
+    }
+
+    public bool PrevUp() {
+        RaycastHit2D cast = Physics2D.BoxCast(transform.position, new Vector2(0.5f, 0.5f), 0, Vector2.down, 0.7f, LayerMask.GetMask("prevUp"));
+
+        return cast;
+    }
+
+    public bool PrevDown() {
+        RaycastHit2D cast = Physics2D.BoxCast(transform.position, new Vector2(0.5f, 0.5f), 0, Vector2.down, 0.7f, LayerMask.GetMask("prevDown"));
 
         return cast;
     }

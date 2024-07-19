@@ -14,8 +14,8 @@ TagManager:
   - ground
   - player
   - stair
-  - 
-  - 
+  - prevUp
+  - prevDown
   - 
   - 
   - 
@@ -44,6 +44,12 @@ TagManager:
   - name: player
     uniqueID: 1156665257
     locked: 0
+  - name: stair_hide
+    uniqueID: 3095665953
+    locked: 0
   - name: fieldUI
     uniqueID: 3560169053
+    locked: 0
+  - name: ui
+    uniqueID: 4203586251
     locked: 0
