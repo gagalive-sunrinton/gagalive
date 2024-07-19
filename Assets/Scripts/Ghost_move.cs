@@ -21,6 +21,8 @@ public class Ghost_move : MonoBehaviour
     private int a = 0;
     private Rigidbody2D rb;
     private int star = 0;
+
+    private bool upToone = false;
     
     // Start is called before the first frame update
     void Start()
@@ -53,7 +55,20 @@ public class Ghost_move : MonoBehaviour
                 Vector3 d1 = new Vector3(onepoint.transform.position.x, transform.position.y, 0);
                 if (Mathf.RoundToInt(onepoint.transform.position.x) == Mathf.RoundToInt(transform.position.x))
                 {
-                    int d = Mathf.RoundToInt(Random.Range(0f, 1f));
+                    if (upToone)
+                    {
+                        upToone = false;
+                    }
+                    else
+                    {
+                        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y);
+                        
+                    }
+                       
+                   
+                    
+                        
+                int d = Mathf.RoundToInt(Random.Range(0f, 1f));
                     if (d == 0)
                     {
                         wherego = 1;
@@ -94,7 +109,16 @@ public class Ghost_move : MonoBehaviour
                         wherego = 2;
                     }
                     Debug.Log("앙");
-                    transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y);
+                    if (upToone)
+                    {
+                        upToone = false;
+                    }
+                    else
+                    {
+                        
+                        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y);
+                  
+                    }
                     a++;
                 }
                 Vector3 dir_two = d2 - transform.position;
@@ -133,7 +157,7 @@ public class Ghost_move : MonoBehaviour
             }
             else
             {
-                Debug.Log("으이ㅏ아ㅓㅇ마ㅣㅜㅢㄹㅇ뮈ㅏㄹ우ㅡㅇ미ㅏ리ㅏㅜ");
+                Debug.Log("afdoahufdankjafdilafsdm");
             }
         }
     }
@@ -193,7 +217,7 @@ public class Ghost_move : MonoBehaviour
                         up = true;
                         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y);
                         Debug.Log("앙");
-                       
+                        upToone = true;
                     }
     
                     Vector3 dir_one = d1 - transform.position;
@@ -248,6 +272,7 @@ public class Ghost_move : MonoBehaviour
                 wherego = 0;
                 up = false;
                 rb.gravityScale = 0;
+                upToone = true;
             }
             Vector3 dir_one = d1 - transform.position;
             dir_one.Normalize();
@@ -307,7 +332,7 @@ public class Ghost_move : MonoBehaviour
                         up = true;
                         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y);
                         Debug.Log("앙");
-                       
+                        upToone = true;
                     }
     
                     Vector3 dir_one = d1 - transform.position;
@@ -361,6 +386,7 @@ public class Ghost_move : MonoBehaviour
                 wherego = 1;
                 up = false;
                 rb.gravityScale = 0;
+                upToone = true;
             }
             Vector3 dir_one = d1 - transform.position;
             dir_one.Normalize();
