@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     [SerializeField] Image Fill, background;
     float stem_disTime;
     public float stairMax, stairMin;
+    public int health;
     
     void Start()
     {
@@ -25,6 +26,8 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
 
         main = this;
+
+        health = 6;
     }
 
     // Update is called once per frame
@@ -37,13 +40,34 @@ public class Player : MonoBehaviour
         
         float h = Input.GetAxis("Horizontal");
 
-        if (Input.GetKey(KeyCode.LeftShift)) {
-            speed *= 1.5f;
-
-            stemina -= 140 * Time.fixedDeltaTime;
+        if (MapManager.Instance.state == MapState.Class) {
+            stemina += Time.deltaTime * 20;
 
             stem_disTime = 3;
+
+            if (stemina > 100) stemina = 100;
         }
+
+        if (Input.GetKey(KeyCode.LeftShift) && stemina > 0) {
+            speed *= 1.5f;
+
+            stemina -= 60 * Time.fixedDeltaTime;
+
+            stem_disTime = 3;
+
+            animator.SetBool("isSprinting", true);
+        } else {
+            animator.SetBool("isSprinting", false);
+        }
+
+        stem_disTime -= Time.deltaTime;
+
+        Color fcol = Fill.color;
+        Color bcol = background.color;
+        bcol.a = fcol.a = stem_disTime/3f;
+
+        Fill.color = fcol;
+        background.color = bcol;
 
         if (InStair()) {
             rb.gravityScale = 0;
@@ -54,12 +78,16 @@ public class Player : MonoBehaviour
             bool up = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space);
             bool down = Input.GetKey(KeyCode.S);
 
-            if (up) 
-                    transform.Translate(Vector2.up * 3 * Time.fixedDeltaTime);
-            else if (down) 
+            if (up) {
+                transform.Translate(Vector2.up * 3 * Time.fixedDeltaTime);
+                animator.SetInteger("stair", 1);
+            }else if (down) {
                 transform.Translate(-Vector2.up * 3 * Time.fixedDeltaTime);
+                animator.SetInteger("stair", 2);
+            }
         } else {
             rb.gravityScale = gravity;
+            animator.SetInteger("stair", 0);
         }
 
         if (h == 0) {
@@ -83,5 +111,18 @@ public class Player : MonoBehaviour
         RaycastHit2D cast = Physics2D.BoxCast(transform.position, new Vector2(0.5f, 0.5f), 0, Vector2.down, 0.7f, LayerMask.GetMask("stair"));
 
         return cast;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+
+    {
+
+        if (collision.gameObject.tag == "enemy")
+
+        {
+            MapManager.Instance.lastClass.Go();
+            health--;
+        }
+
     }
 }

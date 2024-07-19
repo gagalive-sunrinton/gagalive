@@ -138,8 +138,8 @@ MonoBehaviour:
   m_viewObstacleMask:
     serializedVersion: 2
     m_Bits: 0
-  isSeePlayer: 0
-  targetpos1: {x: 2.27, y: 1.65, z: 0}
+  isSeePlayer: 1
+  targetpos1: {x: -32.610157, y: -2.5558505, z: 0}
 --- !u!114 &180824649897373079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
   onepoint_stair_left: {fileID: 0}
   twopoint_stair_left: {fileID: 0}
   threepoint_stair_left: {fileID: 0}
-  speed: 25
+  speed: 15
 --- !u!95 &989983870050681887
 Animator:
   serializedVersion: 5

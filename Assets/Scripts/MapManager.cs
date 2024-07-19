@@ -4,15 +4,18 @@ using UnityEngine;
 
 public enum MapState {
     Class,
-    Corrider
+    Corrider,
+    Science,
 }
 
 public class MapManager : MonoBehaviour
 {
     public static MapManager Instance {get; private set;}
-    public GameObject classSet, corridorSet, spawnpos,monster;
+    public GameObject classSet, corridorSet, ScienceSet, spawnpos,monster;
     public MapState state;
-    public InfoAction classGate1, classGate2;
+    public InfoAction classGate1, classGate2, lastClass;
+    public InfoAction scienceGate1, scienceGate2;
+    public Ghost_move classMob;
     public float timer; 
     void Start()
     {
@@ -28,16 +31,19 @@ public class MapManager : MonoBehaviour
                 timer += Time.deltaTime;
                 if (timer > 5f && timer < 6f)
                 {
-                    GameObject mon = Instantiate(monster, spawnpos.transform.position,Quaternion.identity);
+                    classMob.gameObject.SetActive(true);
                     timer = 10000f;
 
                 }
         }
         else
         {
-            Destroy(monster);
+            classMob.gameObject.SetActive(false);
+            classMob.transform.position = spawnpos.transform.position;
+            timer = 0;
         }
         corridorSet.SetActive(state == MapState.Corrider);
+        ScienceSet.SetActive(state == MapState.Science);
 
         if (state == MapState.Class) {
             if (Input.GetKeyDown(KeyCode.F)) {
