@@ -53,7 +53,7 @@ public class sight2D : MonoBehaviour
 
         Vector2      originPos    = transform.position;
         Collider2D[] hitedTargets = Physics2D.OverlapCircleAll(originPos, m_viewRadius, m_viewTargetMask);
-        isSeePlayer = false;
+        isSeePlayer =false;
         foreach (Collider2D hitedTarget in hitedTargets)
         {
             Vector2 targetPos = hitedTarget.transform.position;
