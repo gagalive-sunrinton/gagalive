@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class CamManager : MonoBehaviour
 {
+    public float intensity;
     public static CamManager main;
     public CinemachineVirtualCamera cam;
     public CinemachineBasicMultiChannelPerlin noise;
@@ -27,9 +28,8 @@ public class CamManager : MonoBehaviour
     }
 
     private void Update() {
-        Vector3 lpos = Vector3.Lerp(transform.position, Player.main.transform.position + new Vector3(0, 2), 0.5f * Time.deltaTime);
 
-        transform.position = new Vector3(lpos.x, lpos.y, transform.position.z);
+        transform.position = new Vector3(Player.main.transform.position.x, Player.main.transform.position.y + 2.3f, Camera.main.transform.position.z);
     }
 
     void ClearRoutine(ref IEnumerator routine) {
