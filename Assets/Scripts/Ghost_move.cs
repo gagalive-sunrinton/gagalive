@@ -38,7 +38,7 @@ public class Ghost_move : MonoBehaviour
     {
         Debug.Log(wherego);
        
-        if (sight.isSeePlayer == true)
+        if (sight.isSeePlayer == true || MapManager.Instance.state == MapState.Class)
         {
             Vector3 xd = new Vector3(sight.targetpos1.x, transform.position.y, 0);
             Vector3 dir = xd - transform.position;
