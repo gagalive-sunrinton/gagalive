@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Player main {get; private set;}
     Rigidbody2D rb;
     SpriteRenderer render;
     public float gravity, moveSpeed;
-    public sight2D sight2D1 = new sight2D();
+    
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         render = GetComponent<SpriteRenderer>();
+
+        main = this;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (sight2D1.isSeePlayer == true)
-        {
-            Debug.Log("으아ㅏ아아!");
-        }
+        
         
         float h = Input.GetAxis("Horizontal");
 
