@@ -16,6 +16,6 @@ public class dieendig : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer > 5f) SceneManager.LoadScene("front");
+        if (timer > 5f) SceneManager.LoadScene("Scenes/Die_ending");
     }
 }
