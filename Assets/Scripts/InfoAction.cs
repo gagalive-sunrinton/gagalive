@@ -7,6 +7,7 @@ public class InfoAction : MonoBehaviour
     Vector2 defScale;
     public InfoAction connected;
     public MapState stateTo;
+    public InfoAction gate1, gate2;
     void Start()
     {
         defScale = transform.localScale;
@@ -23,6 +24,9 @@ public class InfoAction : MonoBehaviour
                 Player.main.transform.position = connected.transform.position;
 
                 UIManager.Instance.Blind();
+
+                MapManager.Instance.classGate1.connected = gate1;
+                MapManager.Instance.classGate2.connected = gate2;
             }
         } else {
             float rate = (7 - dist) / 5;
