@@ -5,10 +5,12 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     Rigidbody2D rb;
+    SpriteRenderer render;
     public float gravity, moveSpeed;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        render = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -36,6 +38,11 @@ public class Player : MonoBehaviour
         if (h == 0) {
             rb.velocity = new Vector2(rb.velocity.x / 3, rb.velocity.y);
         } else {
+            if (h < 0) {
+                transform.localScale = new Vector3(-1, 1);
+            } else {
+                transform.localScale = new Vector3(1, 1);
+            }
             rb.velocity = new Vector2(h * 10 * moveSpeed * Time.deltaTime, rb.velocity.y);
         }
     }
