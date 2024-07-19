@@ -10,9 +10,10 @@ public enum MapState {
 public class MapManager : MonoBehaviour
 {
     public static MapManager Instance {get; private set;}
-    public GameObject classSet, corridorSet;
+    public GameObject classSet, corridorSet, spawnpos,monster;
     public MapState state;
     public InfoAction classGate1, classGate2;
+    public float timer; 
     void Start()
     {
         Instance = this;
@@ -21,6 +22,21 @@ public class MapManager : MonoBehaviour
     void Update()
     {
         classSet.SetActive(state == MapState.Class);
+        if (state == MapState.Class)
+        {
+            
+                timer += Time.deltaTime;
+                if (timer > 5f && timer < 6f)
+                {
+                    GameObject mon = Instantiate(monster, spawnpos.transform.position,Quaternion.identity);
+                    timer = 10000f;
+
+                }
+        }
+        else
+        {
+            Destroy(monster);
+        }
         corridorSet.SetActive(state == MapState.Corrider);
 
         if (state == MapState.Class) {
