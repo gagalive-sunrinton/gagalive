@@ -43,7 +43,7 @@ public class Ghost_move : MonoBehaviour
             Vector3 xd = new Vector3(Player.main.transform.position.x, transform.position.y, 0);
             Vector3 dir = xd - transform.position;
             dir.Normalize();
-            transform.position += dir * speed * Time.deltaTime;
+            transform.position += dir * (speed + UIManager.Instance.timer / 30) * Time.deltaTime;
         }
         else
         {
