@@ -17,7 +17,8 @@ public class Player : MonoBehaviour
     [SerializeField] Image Fill, background;
     float stem_disTime;
     public float stairMax, stairMin;
-    public int health;
+    public int health, salt;
+    public GameObject saltsalt;
     
     void Start()
     {
@@ -28,6 +29,15 @@ public class Player : MonoBehaviour
         main = this;
 
         health = 6;
+    }
+
+    void Update() {
+        if (salt > 0 && Input.GetKeyDown(KeyCode.J)) {
+            salt--;
+
+            var obj = Instantiate(saltsalt, transform.localScale.x / 1.5f * new Vector3(2, 1) + transform.position, Quaternion.identity);
+            Destroy(obj, 10);
+        }
     }
 
     // Update is called once per frame
@@ -122,6 +132,7 @@ public class Player : MonoBehaviour
         {
             MapManager.Instance.lastClass.Go();
             health--;
+            MapManager.Instance.timer = -5f;
         }
 
     }

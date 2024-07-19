@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     public Image health;
     public Text hp;
     public Text timerText;
+    public Text saltsalt;
     public float timer;
     public Sprite h0, h1, h2, h3, h4, h5;
 
@@ -44,6 +45,7 @@ public class UIManager : MonoBehaviour
         }
 
         hp.text = Player.main.health.ToString() + "/6";
+        saltsalt.text = Player.main.salt.ToString() + "/2";
     }
 
     public void Blind() {
